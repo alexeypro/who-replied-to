@@ -7,7 +7,7 @@ Tweeplies = Twitter + Replies. <br/>
 Enter full URL with your status message and we'll give you the results! <br/><br/>
 
 <form action="/who_replied_to" method="post">
-<input type="text" name="targetmessage" size="45" value="http://twitter.com/YOURNAME/status/1234567890"/>
+<input type="text" name="targetmessage" size="45" value="http://twitter.com/YOURNAME/status/1234567890" onclick="if(this.value=='http://twitter.com/YOURNAME/status/1234567890'){this.value='';}" onblur="if(this.value==''){this.value='http://twitter.com/YOURNAME/status/1234567890';}"/>
 <input type="submit" value="Who replied to this message?"/>
 </form>
 
