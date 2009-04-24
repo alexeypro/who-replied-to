@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>Who replied to. Results!</title>
+</head>
+<body>
+and we are back again! <br/>
+
+<% if @all_reply_links.empty? %>
+	Well, it looks you simply forgot to give us a link! <br/><br/>
+<% else %>
+	All the links with replies are below: <br/><br/>
+	<% @all_reply_links.each do |link| %>
+		<a href="<%= link %>"><%= link %></a> <br/>	
+	<% end %>
+<% end %>
+
+<br/>
+Want to <a href="/">try again</a>? <br/>
+
+</body>
+</html>
