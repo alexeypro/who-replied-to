@@ -7,7 +7,7 @@ get '/' do
 end
 
 post '/who_replied_to' do
-  target_message = params[:target_message]
+  target_message = params[:targetmessage]
   unless target_message == nil || target_message.empty?
     username = (/twitter.com\/(.*?)\//).match(target_message.downcase)[1]
     
