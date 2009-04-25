@@ -22,7 +22,7 @@ post '/results' do
     redirect '/problem' and return if all_match == nil
 
     all_links = Array.new
-    req = "http://search.twitter.com/search.atom?q=to:" + username
+    req = "http://search.twitter.com/search.atom?q=to:" + username + "&rpp=1000"
     begin
       open(req) do |f|
     	  f.each_line do |line|
