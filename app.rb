@@ -17,8 +17,10 @@ end
 post '/results' do
   @target_message = params[:targetmessage]
   unless @target_message == nil || @target_message.empty?
-    all_match = (/twitter.com\/(.*?)\//).match(@target_message.downcase)
+    # (not necessary /status/, but may be /statuses/, so .*?)
+    all_match = (/twitter.com\/(.*?)\/.*?\/(.*)/).match(@target_message.downcase)
     @target_name = all_match[1] unless all_match == nil
+    @target_sid = all_match[2] unless all_match == nil    
     redirect '/problem' and return if all_match == nil
 
     # here we get all replies to author of target message (7 days is the limit)
@@ -58,6 +60,7 @@ post '/results' do
     @all_reply_links = Array.new
     @hash_with_body = {}
     @hash_with_name = {}    
+    @hash_with_sid = {}
     all_links.each do |link|
       begin
         open(link) do |f|
@@ -68,16 +71,19 @@ post '/results' do
           body_string = "N/A" if body_match = nil
           # the body (as it is a reply) has @username, need to replace with good url
           body_string = body_string.gsub(/@<a href=\"\//, "@<a href=\"http://twitter.com/")
-          # get authors name
-          name_match = (/twitter.com\/(.*?)\//).match(link.downcase)
+          # get authors name (not necessary /status/, but may be /statuses/, so .*?)
+          name_match = (/twitter.com\/(.*?)\/.*?\/(.*)/).match(link.downcase) 
           name_string = name_match[1].strip unless name_match == nil
           name_string = "unknown" if name_match == nil                    
+          sid_value = name_match[2].strip unless name_match == nil
+          sid_value = "0" if name_match == nil                              
           # now actually check if this is a reply
           search_string = "<a href=\"" + @target_message + "\">in reply to " + @target_name + "</a>"
           we_have_reply = data.downcase.index(search_string.downcase) unless data == nil
           @all_reply_links.push link unless we_have_reply == nil
           @hash_with_body[link] = body_string unless we_have_reply == nil
           @hash_with_name[link] = name_string unless we_have_reply == nil          
+          @hash_with_sid[link] = sid_value unless we_have_reply == nil          
       	end
       rescue
         # ignore here

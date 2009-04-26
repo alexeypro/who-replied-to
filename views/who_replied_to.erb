@@ -10,13 +10,13 @@ and we are back again! <br/>
 <% else %>
 	Target message: <br/>
 	<font color="green">
-		"<%= @target_body %>" by @<a href="http://twitter.com/<%= @target_name %>"><%= @target_name %></a> (<a href="<%= @target_message %>">direct link)</a>
+		"<%= @target_body %>" by @<a href="http://twitter.com/<%= @target_name %>"><%= @target_name %></a> (<a href="<%= @target_message %>">direct link</a> or <a href="http://twitter.com/home?in_reply_to=<%= @target_name %>&in_reply_to_status_id=<%= @target_sid %>&status=%40<%= @target_name %>+">reply</a>)
 	</font>
 	<br/>
 	<br/>
 	All replies are below: <br/><br/>
 	<% @all_reply_links.each do |link| %>
-		"<%= @hash_with_body[link] %>" by @<a href="http://twitter.com/<%= @hash_with_name[link] %>"><%= @hash_with_name[link] %></a> (<a href="<%= link %>">direct link)</a> <br/>	
+		"<%= @hash_with_body[link] %>" by @<a href="http://twitter.com/<%= @hash_with_name[link] %>"><%= @hash_with_name[link] %></a> (<a href="<%= link %>">direct link</a> or <a href="http://twitter.com/home?in_reply_to=<%= @hash_with_name[link] %>&in_reply_to_status_id=<%= @hash_with_sid[link] %>&status=%40<%= @hash_with_name[link] %>+">reply</a>) <br/>	
 	<% end %>
 <% end %>
 
