@@ -25,7 +25,7 @@ post '/results' do
 
     # here we get all replies to author of target message (7 days is the limit)
     all_links = Array.new
-    req = "http://search.twitter.com/search.atom?q=to:" + @target_name + "&rpp=1000"
+    req = "http://search.twitter.com/search.atom?q=to:" + @target_name + "&rpp=1000&since_id=" + @target_sid
     begin
       open(req) do |f|
     	  f.each_line do |line|
