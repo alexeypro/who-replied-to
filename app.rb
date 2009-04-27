@@ -1,6 +1,8 @@
 require "rubygems"
 require "sinatra"
 require "open-uri"
+require "base64"
+require "builder"
 
 get '/' do
   erb :index
@@ -14,12 +16,26 @@ get '/problem' do
   erb :problem
 end
 
+get '/feed/:mime64targetlink/rss.xml' do
+  @target = prepare_target(Base64.decode64(params[:mime64targetlink]))
+  redirect '/problem' and return if @target == nil
+  all_links = prepare_all_links(@target)
+  redirect '/problem' and return if all_links == nil        
+  @all_reply_links = prepare_all_reply_links(all_links, @target)  
+  @my_rss = "/feed/" + Base64.encode64(@target[:link]).strip + "/rss.xml"  
+  @last_time = @all_reply_links[0][:time] unless @all_reply_links.empty?
+  @last_time = Time.now if @all_reply_links.empty?
+  content_type 'application/xml', :charset => 'utf-8'  
+  builder :who_replied_to
+end
+
 post '/results' do
   @target = prepare_target(params[:targetmessage])
   redirect '/problem' and return if @target == nil
   all_links = prepare_all_links(@target)
   redirect '/problem' and return if all_links == nil        
   @all_reply_links = prepare_all_reply_links(all_links, @target)  
+  @my_rss = "/feed/" + Base64.encode64(@target[:link]).strip + "/rss.xml"
   erb :who_replied_to
 end
 
@@ -42,11 +58,13 @@ def prepare_target(target_message)
       open(req) do |f|
         data = f.read
         # get the body
-        body_match = (/<span class="entry-content">(.*?)<\/span>/).match(data) unless data == nil
+        body_match = (/<span class="entry-content">(.*?)<\/span>.*<span class="published">(.*?)<\/span>/).match(data) unless data == nil
         target[:body] = body_match[1].strip unless body_match == nil
-        target[:body] = "N/A" if body_match = nil
+        target[:body] = "N/A" if body_match == nil
         # the body may contain @username, need to replace with good url
-        target[:body] = target[:body].gsub(/@<a href=\"\//, "@<a href=\"http://twitter.com/")        
+        target[:body] = target[:body].gsub(/@<a href=\"\//, "@<a href=\"http://twitter.com/")                
+        target[:time] = Time.parse(body_match[2]) unless body_match == nil        
+        target[:time] = Time.now if body_match == nil        
       end
     rescue
       # we can ignore here too, at least we'll show smth :-)
@@ -92,11 +110,13 @@ def prepare_all_reply_links(all_links, target)
         hash_data[:link] = link
         data = f.read
         # get the body
-        body_match = (/<span class="entry-content">(.*?)<\/span>/).match(data) unless data == nil
+        body_match = (/<span class="entry-content">(.*?)<\/span>.*<span class="published">(.*?)<\/span>/).match(data) unless data == nil
         hash_data[:body] = body_match[1].strip unless body_match == nil
-        hash_data[:body] = "N/A" if body_match = nil
+        hash_data[:body] = "N/A" if body_match == nil
         # the body (as it is a reply) has @username, need to replace with good url
         hash_data[:body] = hash_data[:body].gsub(/@<a href=\"\//, "@<a href=\"http://twitter.com/")
+        hash_data[:time] = Time.parse(body_match[2]) unless body_match == nil        
+        hash_data[:time] = Time.now if body_match == nil                
         # get authors name (not necessary /status/, but may be /statuses/, so .*?)
         name_match = (/twitter.com\/(.*?)\/.*?\/(.*)/).match(link.downcase) 
         hash_data[:name] = name_match[1].strip unless name_match == nil

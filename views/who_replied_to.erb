@@ -8,13 +8,13 @@ and we are back again! <br/>
 <% if @all_reply_links.empty? %>
 	Well, we cannot find anything, sorry! <br/><br/>
 <% else %>
-	Target message: <br/>
+	Target message:<br/>
 	<font color="green">
 		"<%= @target[:body] %>" by @<a href="http://twitter.com/<%= @target[:name] %>"><%= @target[:name] %></a> (<a href="<%= @target[:link] %>">direct link</a> or <a href="http://twitter.com/home?in_reply_to=<%= @target[:name] %>&in_reply_to_status_id=<%= @target[:sid] %>&status=%40<%= @target[:name] %>+">reply</a>)
 	</font>
 	<br/>
 	<br/>
-	All replies are below: <br/><br/>
+	All replies are below: (<a href="<%= @my_rss %>">rss</a>)<br/><br/>
 	<% @all_reply_links.each do |link_hash| %>
 		"<%= link_hash[:body] %>" by @<a href="http://twitter.com/<%= link_hash[:name] %>"><%= link_hash[:name] %></a> (<a href="<%= link_hash[:link] %>">direct link</a> or <a href="http://twitter.com/home?in_reply_to=<%= link_hash[:name] %>&in_reply_to_status_id=<%= link_hash[:sid] %>&status=%40<%= link_hash[:name] %>+">reply</a>) <br/>	
 	<% end %>
