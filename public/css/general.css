@@ -122,10 +122,10 @@ a.target-link,a.target-link:visited { font-size:28px; letter-spacing:-1px; }
 a.target-link:hover,a.target-link:visited:hover { font-size:28px; letter-spacing:-1px; }
 a.target-link-by,a.target-link-by:visited { font-size:16px; letter-spacing:0px; color:00B6C0; }
 a.target-link-by:hover,a.target-link-by:visited:hover { font-size:16px; letter-spacing:0px; color:00B6C0; }
-a.reply-link,a.reply-link:visited { font-size:24px; letter-spacing:0px; }
-a.reply-link:hover,a.reply-link:visited:hover { font-size:24px; letter-spacing:0px; }
-a.reply-link-by,a.reply-link-by:visited { font-size:16px; letter-spacing:0px; color:00B6C0; }
-a.reply-link-by:hover,a.reply-link-by:visited:hover { font-size:16px; letter-spacing:0px; color:00B6C0; }
+a.reply-link,a.reply-link:visited { font-size:18px; letter-spacing:0px; color:00979E; }
+a.reply-link:hover,a.reply-link:visited:hover { font-size:18px; letter-spacing:0px; color:00979E; }
+a.reply-link-by,a.reply-link-by:visited { font-size:14px; letter-spacing:0px; color:00979E; }
+a.reply-link-by:hover,a.reply-link-by:visited:hover { font-size:14px; letter-spacing:0px; color:00979E; }
 
 a.footer-link,a.footer-link:visited { text-decoration:none; font-size:12px; color:#20888D; }
 a.footer-link:hover,a.footer-link:visited:hover { text-decoration:underline; font-size:12px; color:#20888D; }

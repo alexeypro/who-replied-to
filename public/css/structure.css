@@ -137,7 +137,7 @@ div.reply01 {
 	text-align:center;
 	width:650px;
 	height:11px;
-	background:url(../i/bg-target01.gif) no-repeat top;
+	background:url(../i/bg-reply01.gif) no-repeat top;
 }
 div.reply02 {
 	position:relative;
@@ -147,11 +147,11 @@ div.reply02 {
 	padding:10px;
 	padding-left:25px;
 	padding-right:25px;
-	font-size:22px;
+	font-size:18px;
 	letter-spacing:0px;
 	color:#303030;
 	width:600px;
-	background:#ffffff;
+	background:#B1EEF1;
 }
 div.reply03 {
 	position:relative;
@@ -159,17 +159,17 @@ div.reply03 {
 	margin:0px;
 	width:650px;
 	height:3px;
-	background:url(../i/bg-target02.gif) no-repeat bottom;
+	background:url(../i/bg-reply02.gif) no-repeat bottom;
 }
 div.by-reply {
 	position:relative;
 	padding:0px;
 	margin:0px;
 	text-align:center;
-	padding-top:10px;
-	font-size:16px;
+	padding-top:5px;
+	font-size:14px;
 	letter-spacing:0px;
-	color:#C0C0C0;
+	color:#50C5CB;
 }
 
 
