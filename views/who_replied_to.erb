@@ -1,41 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-<title>Tweeplies = Twitter + Replies. Results</title>
+<title>Results! // Tweeplies = Twitter + Replies. Find all replies to any tweet!</title>
+<meta name="description" content="Tweeplies = Twitter + Replies. Find all replies to any (not necessary yours) tweet!">
+<meta name="keywords" content="tweeplies, tweeply, twitter, twitters, replies, reply, twitter, find, search reply, find reply, find status, update status, auto, twitters, tweet, tweets, rss, feed, atom">
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.pngFix.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('div.logo').pngFix();
+		$('div.tagline01-int').pngFix();
+		$('div.tagline02-int').pngFix();
+	});
+</script>
+<link rel="stylesheet" type="text/css" href="css/general.css" media="screen">
+<link rel="stylesheet" type="text/css" href="css/structure.css" media="screen">
+<!--[if IE]>
+<link rel="stylesheet" type="text/css" href="css/ie.css">
+<![endif]-->
 </head>
 <body>
-and we are back again! <br/>
-
-<% if @all_reply_links.empty? %>
-	Well, we cannot find anything, sorry! <br/><br/>
-<% else %>
-	Target message:<br/>
-	<font color="green">
-		"<%= @target[:body] %>" by @<a href="http://twitter.com/<%= @target[:name] %>"><%= @target[:name] %></a> (<a href="<%= @target[:link] %>">direct link</a> or <a href="http://twitter.com/home?in_reply_to=<%= @target[:name] %>&in_reply_to_status_id=<%= @target[:sid] %>&status=%40<%= @target[:name] %>+">reply</a>)
-	</font>
-	<br/>
-	<br/>
-	All replies are below: (<a href="<%= @my_rss %>">rss</a>)<br/><br/>
-	<% @all_reply_links.each do |link_hash| %>
-		"<%= link_hash[:body] %>" by @<a href="http://twitter.com/<%= link_hash[:name] %>"><%= link_hash[:name] %></a> (<a href="<%= link_hash[:link] %>">direct link</a> or <a href="http://twitter.com/home?in_reply_to=<%= link_hash[:name] %>&in_reply_to_status_id=<%= link_hash[:sid] %>&status=%40<%= link_hash[:name] %>+">reply</a>) <br/>	
-	<% end %>
-<% end %>
-
-<br/>
-Want to <a href="/">try again</a>? or just tweet <a href="http://twitter.com/home?status=RT+%40alexqwe+Find+replies+to+any+tweet+http%3A%2F%2Ftweeplies.qwe3.com">about us</a>!<br/>
-
-<br/>
-<br/>
-<br/>
-<br/>
-<hr/>
-Source code is free and available on <a href="http://github.com/westla7/who-replied-to/">GitHub</a>. Just a nice toy from QWE3 Inc.
-Tweet <a href="http://twitter.com/home?status=RT+%40alexqwe+Find+replies+to+any+tweet+http%3A%2F%2Ftweeplies.qwe3.com">about us</a>!
-
-<script type="text/javascript">
+<div class="container-wide"><center>
+	<div id="container-home">
+		<div class="logo"><a href="/"><img src="i/tweeplies.png" alt="Tweeplies = Twitter + Replies. Find everybody who replied to any tweet!" title="Tweeplies = Twitter + Replies. Find everybody who replied to any tweet!" width="333" height="78"></a></div>
+		<% if @all_reply_links.empty? %>
+<div class="no-results"><img src="i/no-results.png" alt="And we are back again! Well, we cannot find anything reasonable, sorry!" title="And we are back again! Well, we cannot find anything reasonable, sorry!" width="604" height="79"><br clear="all"><a href="/"><img src="i/try-again.png" alt="Want to try again?" title="Want to try again?" width="301" height="39"></a></div>		
+		<% else %>		
+		<div class="tagline01-int"><img src="i/tagline-int.png" alt="And we are back again! Target message:" title="And we are back again! Target message:" width="378" height="72"></div>
+		
+		<!-- target message -->
+		<div class="target-message-block">
+			<div class="target-message01"></div>
+			<div class="target-message02"><%= @target[:body] %>
+				<br clear="all">
+				<div class="by"><i>by @<a href="http://twitter.com/<%= @target[:name] %>" class="target-link-by"><%= @target[:name] %></a> (<a href="<%= @target[:link] %>" class="target-link-by">direct link</a> or <a href="http://twitter.com/home?in_reply_to=<%= @target[:name] %>&in_reply_to_status_id=<%= @target[:sid] %>&status=%40<%= @target[:name] %>+" class="target-link-by">reply</a>)</i></div>
+			</div>
+			<div class="target-message03"></div>
+		</div>
+		<!-- //target message -->
+		
+		<div class="tagline02-int"><img src="i/all-replies.png" alt="All replies are below:" title="All replies are below:" width="225" height="25"><a href="<%= @my_rss %>"><img src="i/rss.png" alt="RSS" title="RSS" width="52" height="25"></a></div>
+		
+		<% @all_reply_links.each do |link_hash| %>
+		<!-- reply -->
+		<div class="reply-block">
+			<div class="reply01"></div>
+			<div class="reply02"><%= link_hash[:body] %>
+				<br clear="all">
+				<div class="by-reply"><i>by @<a href="http://twitter.com/<%= link_hash[:name] %>" class="reply-link-by"><%= link_hash[:name] %></a> (<a href="<%= link_hash[:link] %>" class="reply-link-by">direct link</a> or <a href="http://twitter.com/home?in_reply_to=<%= link_hash[:name] %>&in_reply_to_status_id=<%= link_hash[:sid] %>&status=%40<%= link_hash[:name] %>+" class="reply-link-by">reply</a>)</i></div>
+			</div>
+			<div class="reply03"></div>
+		</div>
+		<!-- //reply -->
+		<% end %>				
+		
+		<div class="tagline02-int"><a href="/"><img src="i/try-again.png" alt="Want to try again?" title="Want to try again?" width="301" height="39"></a><br clear="all"><img src="i/or-just.png" alt="or just" title="or just" width="107" height="39"><br clear="all"><a href="http://twitter.com/home?status=RT+%40alexqwe+Find+replies+to+any+tweet+http%3A%2F%2Ftweeplies.qwe3.com"><img src="i/tweet-about-us.png" alt="tweet about us!" title="tweet about us!" width="258" height="32"></a></div>		
+		<% end %>				
+		<div class="footer">Source code is free and available on <a href="http://github.com/westla7/who-replied-to/" target="_blank" class="footer-link" title="GitHub">GitHub</a>.<br clear="all">Just a nice toy from <a href="http://www.qwe3.com/" target="_blank" class="footer-link" title="QWE3, Inc."><strong>QWE3, Inc.</strong></a></div>
+		<div class="qwe3"><a href="http://www.qwe3.com/" target="_blank" title="QWE3, Inc."><img src="i/qwe3.gif" title="QWE3, Inc." alt="QWE3, Inc."></a></div>
+	</div>
+</center></div>
+<script type="text/javascript"> 
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
+</script> 
+<script type="text/javascript"> 
 try {
 var pageTracker = _gat._getTracker("UA-4738966-7");
 pageTracker._trackPageview();
