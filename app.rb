@@ -31,9 +31,17 @@ end
 
 post '/results' do
   @target = prepare_target(params[:targetmessage])
-  redirect '/problem' and return if @target == nil
+  if @target == nil
+    print "Cannot prepare target!\n"
+    redirect '/problem'
+    return
+  end
   all_links = prepare_all_links(@target)
-  redirect '/problem' and return if all_links == nil        
+  if all_links == nil
+    print "Cannot prepare all links!\n"
+    redirect '/problem'
+    return
+  end
   @all_reply_links = prepare_all_reply_links(all_links, @target)  
   @my_rss = "/feed/" + Base64.encode64(@target[:link]).strip + "/rss.xml"
   erb :who_replied_to
@@ -81,7 +89,9 @@ end
 def prepare_all_links(target)
   # here we get all replies to author of target message (7 days is the limit)
   all_links = Array.new
-  req = "http://search.twitter.com/search.atom?q=to:" + target[:name] + "&rpp=1000&since_id=" + target[:sid]
+  # sometimes fails on twitter side, need to figure out why
+  #req = "http://search.twitter.com/search.atom?q=to:" + target[:name] + "&rpp=1000&since_id=" + target[:sid]
+  req = "http://search.twitter.com/search.atom?q=to:" + target[:name]
   begin
     open(req) do |f|
       f.each_line do |line|
@@ -93,6 +103,7 @@ def prepare_all_links(target)
     	end
     end
   rescue
+    print "Error while working with: " + req + "\n"
     all_links = nil
   end  
   all_links
